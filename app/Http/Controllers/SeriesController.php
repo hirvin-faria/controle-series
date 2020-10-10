@@ -31,8 +31,12 @@ class SeriesController extends Controller
     {
         // $nome = $request->get('nome'); or
         $nome = $request->nome;
-        $serie = new Serie();
-        $serie->nome = $nome;
-        var_dump($serie->save());
+        
+        $serie =Serie::create([
+            'nome' => $nome
+        ]);
+
+        echo "Serie com id {$serie->id} adicionada: {$serie->nome}";
+
     }
 }
