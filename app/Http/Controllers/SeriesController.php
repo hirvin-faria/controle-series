@@ -45,7 +45,7 @@ class SeriesController extends Controller
             "Série {$serie->id} criada com sucesso {$serie->nome}"
         );
 
-        return redirect('/series');
+        return redirect()->route('listar_series');
 
     }
 
@@ -57,6 +57,6 @@ class SeriesController extends Controller
             "Série removida com sucesso"
         );
 
-        return redirect('/series');
+        return redirect()->route('listar_series');
     }
 }
