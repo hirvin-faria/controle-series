@@ -11,7 +11,11 @@ class SeriesController extends Controller
         // echo $request->url();
         // exit();
 
-        $series = Serie::all();
+        $series = Serie::query()
+            ->orderBy('nome')
+            ->get();
+
+        $mensagem = $request->session()->get('mensagem');
     
         $html = "<ul>";
         foreach($series as $serie){
@@ -19,7 +23,7 @@ class SeriesController extends Controller
         }
         $html .= "</ul>";
     
-        return view('series.index', compact('series'));
+        return view('series.index', compact('series', 'mensagem'));
     }
 
     public function create()
@@ -32,11 +36,16 @@ class SeriesController extends Controller
         // $nome = $request->get('nome'); or
         $nome = $request->nome;
         
-        $serie =Serie::create([
+        $serie = Serie::create([
             'nome' => $nome
         ]);
 
-        echo "Serie com id {$serie->id} adicionada: {$serie->nome}";
+        $request->session()->flash(
+            'mensagem',
+            "Série {$serie->id} criada com sucesso {$serie->nome}"
+        );
+
+        return redirect('/series');
 
     }
 }
